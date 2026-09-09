@@ -20,11 +20,12 @@ public class LookAtTarget : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		ClickVoid();
 		if (target != null)
 		{
 			Debug.Log("Olhando para o alvo: " + target.name);
 			transform.LookAt(target.transform);
+			Camera.main.transform.LookAt(target.transform);
+		}
 			if (volumeController != null && target.GetComponent<AudioSource>() != null)
 			{
 				volumeController.SetNewSound(target.GetComponent<AudioSource>());
@@ -37,26 +38,4 @@ public class LookAtTarget : MonoBehaviour {
 		}
 	}
 	
-	void ClickVoid()
-	{
-		if (Input.GetMouseButton(0))
-		{
-			var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit))
-			{
-				if (hit.collider != null)
-				{
-					Debug.Log("Clicked on: " + hit.collider.gameObject.name);
-					target = hit.collider.gameObject;
-				}
-			}
-			else
-			{
-				target = this.gameObject; // Reset to default target if nothing is hit
-				
-				
-			}
-		}
-	}
-}
+
